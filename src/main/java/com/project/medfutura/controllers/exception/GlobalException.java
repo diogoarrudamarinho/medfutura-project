@@ -1,5 +1,9 @@
 package com.project.medfutura.controllers.exception;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -11,19 +15,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalException {
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
-       
-        StringBuilder errors = new StringBuilder();
+    public ResponseEntity<List<String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(error -> ((FieldError) error).getDefaultMessage())
+                .collect(Collectors.toList());
 
-        for (FieldError error : ex.getBindingResult().getFieldErrors()) 
-        {
-            errors.append(error.getField())
-                  .append(": ")
-                  .append(error.getDefaultMessage())
-                  .append("\n");
-        }
-
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
-                             .body(errors.toString());
-    }                         
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errors);
+    }        
+    
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<String> handleObjectNotFoundException(ObjectNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 }
