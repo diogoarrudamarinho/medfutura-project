@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.medfutura.entities.Pessoa;
@@ -37,8 +38,8 @@ public class PessoaController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @GetMapping("/{term}")
-    public ResponseEntity<PessoaDTO> searchByTerm(@PathVariable String term){
+    @GetMapping
+    public ResponseEntity<PessoaDTO> searchByTerm(@RequestParam("t") String term){
         //TODO: Implement searchByTerm
         return ResponseEntity.ok(service.searchByTerm(term));
     }
