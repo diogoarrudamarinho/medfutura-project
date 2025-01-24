@@ -1,8 +1,13 @@
 package com.project.medfutura.services.Implementations;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.hibernate.Hibernate;
 import org.hibernate.ObjectNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.medfutura.dto.PessoaDTO;
 import com.project.medfutura.entities.Pessoa;
@@ -35,11 +40,14 @@ public class PessoaServiceImp implements PessoaService {
     }               
 
     @Override
+    @Transactional(readOnly = true)
     public PessoaDTO findById(Long id) {
-        return new PessoaDTO(repository.findById(id)
-                            .orElseThrow(() -> 
-                            new ObjectNotFoundException(
-                            "Object not Found", id)));
+        Pessoa pessoa = repository.findById(id)
+                              .orElseThrow(() -> 
+                              new ObjectNotFoundException("Object not Found", id));
+   
+        pessoa.getStack().size();
+        return new PessoaDTO(pessoa);
     }
 
     @Override
@@ -59,9 +67,13 @@ public class PessoaServiceImp implements PessoaService {
     }
 
     @Override
-    public PessoaDTO searchByTerm(String term) {
-        // TODO: Implement searchByTerm
-        return new PessoaDTO();
+    @Transactional(readOnly = true)
+    public List<PessoaDTO> searchByTerm(String term) {
+        List<Pessoa> pessoas = repository.findAllByTerm(term.toLowerCase());
+        pessoas.forEach(pessoa -> Hibernate.initialize(pessoa.getStack()));
+        return pessoas.stream()
+                      .map(PessoaDTO::new) // Converte Pessoa para PessoaDTO
+                      .collect(Collectors.toList());
     }
     
 }
