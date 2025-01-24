@@ -2,11 +2,14 @@ package com.project.medfutura.entities;
 
 import java.util.List;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -33,6 +36,9 @@ public class Pessoa {
     @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "A data de nascimento deve estar no formato AAAA-MM-DD.")
     private String nascimento;
 
+    @ElementCollection()
+    @CollectionTable(name = "pessoa_stack", joinColumns = @JoinColumn(name = "pessoa_id"))
+    @Column(name = "stack_item", length = 32)
     private List<
                 @NotBlank(message = "O item da stack é obrigatório.") 
                 @Size(max = 32, message = "O item deve conter no maximo 32 caracteres.") 
