@@ -1,24 +1,25 @@
 package com.project.medfutura.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.project.medfutura.entities.Pessoa;
-import com.project.medfutura.dto.PessoaDTO;
-import com.project.medfutura.services.PessoaService;
-
-import jakarta.validation.Valid;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.project.medfutura.dto.PessoaDTO;
+import com.project.medfutura.entities.Pessoa;
+import com.project.medfutura.services.PessoaService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -39,8 +40,7 @@ public class PessoaController {
     }
 
     @GetMapping
-    public ResponseEntity<PessoaDTO> searchByTerm(@RequestParam("t") String term){
-        //TODO: Implement searchByTerm
+    public ResponseEntity<List<PessoaDTO>> searchByTerm(@RequestParam(value ="t", required = true) String term){
         return ResponseEntity.ok(service.searchByTerm(term));
     }
 
