@@ -69,6 +69,10 @@ public class PessoaServiceImp implements PessoaService {
     @Override
     @Transactional(readOnly = true)
     public List<PessoaDTO> searchByTerm(String term) {
+
+        if(term == null || term.isBlank())
+            throw new IllegalArgumentException("Term is null");
+            
         List<Pessoa> pessoas = repository.findAllByTerm(term.toLowerCase());
         pessoas.forEach(pessoa -> Hibernate.initialize(pessoa.getStack()));
         return pessoas.stream()
