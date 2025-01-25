@@ -31,8 +31,9 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+    @ExceptionHandler({DataIntegrityViolationException.class, 
+                       IllegalArgumentException.class})
+    public ResponseEntity<String> handleBadRequest(Exception ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
