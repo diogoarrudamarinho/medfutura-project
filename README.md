@@ -34,7 +34,7 @@ Para instalar o PostgreSQL, siga as instruções oficiais para o seu sistema ope
 
 4. Configure o arquivo `.env` com as informações do banco de dados.
 
-    ```
+    ```env
     DB_URL=jdbc:postgresql://localhost:5432/medfutura_api
     DB_USERNAME=your_username
     DB_PASSWORD=your_password
