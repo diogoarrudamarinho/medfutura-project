@@ -1,6 +1,6 @@
 # MedFutura API
 
-API simples para gerenciamento de informações sobre pessoas. A API permite a criação, consulta, atualização e exclusão de registros de pessoas, além de oferecer uma busca por termos no apelido, nome ou stack.
+API simples para gerenciamento de informações sobre pessoas criada para o processo seletivo da [MedFutura](https://www.medfutura.com.br/). A API permite a criação, consulta, atualização e exclusão de registros de pessoas, além de oferecer uma busca por termos no apelido, nome ou stack.
 
 ## 📋 Pré-requisitos
 
