@@ -50,7 +50,7 @@ Para instalar o PostgreSQL, siga as instruções oficiais para o seu sistema ope
 
 A API estará disponível em `http://localhost:8080`.
 
-## Endpoints
+## ⚙️ Endpoints
 
 * POST `(/pessoas)` - Cria uma nova pessoa.
 * PUT `(/pessoas/:id)` - Atualiza uma pessoa existente.
@@ -58,7 +58,7 @@ A API estará disponível em `http://localhost:8080`.
 * GET `(/pessoas?t=)` - Procura uma pessoa por `termo`.
 * DELETE `(/pessoas/id)` - Deleta uma pessoa por `id`.
 
-###  Exemplo de Pessoa
+### Exemplo de `JSON`
 
 ```json
 {
